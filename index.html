@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen Z Slang Dictionary</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 700px;
+            box-sizing: border-box;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        #results {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .term-item {
+            background-color: #ecf0f1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .term-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .term-item h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+        .term-item p {
+            margin: 0;
+            color: #555;
+            font-size: 1.1em;
+        }
+        .no-results {
+            color: #7f8c8d;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gen Z Slang Dictionary</h1>
+        <input type="text" id="searchInput" placeholder="Search for a slang term...">
+        <div id="results">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        const slangData = [
+            { term: "Cap", definition: "To lie or exaggerate. Often used in the phrase 'no cap'." },
+            { term: "No Cap", definition: "For real; no lie. Used to emphasize truthfulness." },
+            { term: "Vibe Check", definition: "An assessment of a person's mood or the atmosphere of a situation. Can be a literal or figurative check." },
+            { term: "Simp", definition: "Someone who does too much for a person they like, often to gain their affection. Seen as overly eager or submissive." },
+            { term: "Bussin'", definition: "Really good; delicious (often for food). E.g., 'This pizza is bussin'!'." },
+            { term: "Bet", definition: "Okay; alright; yes. Used to agree to something or confirm understanding." },
+            { term: "Spill the Tea", definition: "To share gossip or exciting news." },
+            { term: "Glow Up", definition: "A transformation for the better, often referring to an improvement in appearance, confidence, or success." },
+            { term: "Slap", definition: "To be excellent or very good (e.g., 'This song slaps!')." },
+            { term: "Rent Free", definition: "Something or someone that is constantly on your mind, occupying your thoughts without effort." },
+            { term: "Ghosting", definition: "To suddenly end all communication with someone without explanation." },
+            { term: "Periodt", definition: "An emphatic way to end a statement, signaling that there's nothing more to add or discuss. Often used after a strong opinion." },
+            { term: "Cheugy", definition: "An outdated or uncool trend, typically associated with millennials." },
+            { term: "Main Character Energy", definition: "Behaving as if you are the protagonist of your own life, often with a sense of confidence and individuality." },
+            { term: "POV", definition: "Point of view. Used to set up a scenario from a particular perspective." }
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const resultsDiv = document.getElementById('results');
+
+        function displayResults(termsToDisplay) {
+            resultsDiv.innerHTML = ''; // Clear previous results
+
+            if (termsToDisplay.length === 0) {
+                resultsDiv.innerHTML = '<p class="no-results">No terms found. Try searching for something else!</p>';
+                return;
+            }
+
+            termsToDisplay.forEach(item => {
+                const termItem = document.createElement('div');
+                termItem.classList.add('term-item');
+
+                const termHeader = document.createElement('h3');
+                termHeader.textContent = item.term;
+
+                const termDefinition = document.createElement('p');
+                termDefinition.textContent = item.definition;
+
+                termItem.appendChild(termHeader);
+                termItem.appendChild(termDefinition);
+                resultsDiv.appendChild(termItem);
+            });
+        }
+
+        function searchDictionary() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            if (searchTerm === '') {
+                // If search box is empty, show all terms
+                displayResults(slangData);
+            } else {
+                const filteredTerms = slangData.filter(item =>
+                    item.term.toLowerCase().includes(searchTerm) ||
+                    item.definition.toLowerCase().includes(searchTerm)
+                );
+                displayResults(filteredTerms);
+            }
+        }
+
+        // Initial display of all terms when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            displayResults(slangData);
+        });
+
+        // Live search as user types
+        searchInput.addEventListener('input', searchDictionary);
+
+    </script>
+</body>
+</html>
